@@ -1,5 +1,8 @@
+
+//import models
 const {Thought,User}=require('../models')
 const thoughtController ={
+    //get all thoughts
 async getAllThoughts(req,res){
     try{
        const thoughtData=await Thought.find().sort({
@@ -12,6 +15,7 @@ async getAllThoughts(req,res){
     }
     
 },
+//get one thought
 async getOneThought(req,res){
     try{
         const thoughtData=await Thought.findOne(
@@ -29,6 +33,7 @@ async getOneThought(req,res){
     }
     
 },
+//create a thought
 async createThought(req,res){
     try{
         const thoughtData = await Thought.create(req.body)
@@ -47,6 +52,7 @@ async createThought(req,res){
     }
     
 },
+//update a thought
 async updateThought(req,res){
     try{
         const thoughtData =await Thought.findOneAndUpdate(
@@ -73,36 +79,38 @@ async updateThought(req,res){
     }
     
 },
-async deleteThought(req,res){
-    try{
-        const thoughtData = await Thought.findByIdAndRemove(
-            {
-                _id:req.params.thoughtId
-            }
-        )
-        if(!thoughtData){
-            res.status(404).json({message:'Nothing Here'})
-        }
-         const userData = await User.findOneAndUpdate(
-            {
-                thoughts:req.params.thoughtId
-            },
-            {
-                $pull:{thoughts:req.params.thoughtId}
-            },
-            {new:true}
-         )
-         if(!userData){
-            res.status(404).json({message:'Nothing Here'})
+//delete thought
+async deleteThought(req, res) {
+    try {
+        const thoughtData = await Thought.findOneAndRemove({
+            _id: req.params.thoughtId
+        });
+
+        if (!thoughtData) {
+            return res.status(404).json({ message: 'Message Deleted' });
         }
 
-        res.json({message:'thought Deleted'})
-    }catch(err){
-        console.error(err)
-        res.status(500).json(err)
+        const userData = await User.findOneAndUpdate(
+            {
+                thoughts: req.params.thoughtId
+            },
+            {
+                $pull: { thoughts: req.params.thoughtId }
+            },
+            { new: true }
+        );
+
+        if (!userData) {
+            return res.status(404).json({ message: 'Message Deleted' });
+        }
+
+        return res.json({ message: 'thought Deleted' });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json(err);
     }
-    
 },
+//add a reaction 
 async addReaction(req,res){
     try{
         const thoughtData= await Thought.findOneAndUpdate(
@@ -127,6 +135,7 @@ async addReaction(req,res){
     }
     
 },
+//remove reaction 
 async removeReaction(req,res){
     try{
         const thoughtData= await Thought.findOneAndUpdate(
@@ -135,7 +144,7 @@ async removeReaction(req,res){
             },
             {
                 $pull:{
-                    reactions:req.body
+                    reactions:{reactionId:req.params.reactionId}
                 }
             },
             {runValidators:true,new:true}

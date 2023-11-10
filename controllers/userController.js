@@ -1,5 +1,6 @@
 const{User,Thought}=require('../models')
 const userController = {
+    //get all users
     async getUsers(req,res){
         try{
             const dbUserData = await User.find()
@@ -11,6 +12,7 @@ const userController = {
             res.status(500).json(err)
         }
     },
+    //get one user
     async getOneUser(req,res){
         try{
             const dbUserData = await User.findOne({
@@ -27,6 +29,7 @@ const userController = {
             res.status(500).json(err)
         }
     },
+    //create user
     async createUser(req,res){
         try{
             const dbUserData =await User.create(req.body)
@@ -37,6 +40,7 @@ const userController = {
             res.status(500).json(err)
         }
     },
+    //update user
     async updateUser(req,res){
         try{
             const dbUserData =await User.findOneAndUpdate(
@@ -53,6 +57,7 @@ const userController = {
             res.status(500).json(err)
         }
     },
+    //delete user
     async deleteUser(req,res){
         try{
             const dbUserData = await User.findOneAndDelete({
@@ -67,6 +72,7 @@ const userController = {
             res.status(500).json(err)
         }
     },
+    //add a friend
     async addFriend(req,res){
         try{
             const dbUserData =await User.findOneAndUpdate({
@@ -85,6 +91,7 @@ const userController = {
             res.status(500).json(err)
         }
     },
+    //delete a friend
     async deleteFriend(req,res){
         try{const dbUserData =await User.findOneAndUpdate({
             _id:req.params.userId
