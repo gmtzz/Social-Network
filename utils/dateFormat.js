@@ -37,4 +37,5 @@ const addDateSuffix = (date) => {
   
     return formattedTimeStamp;
   };
+  // export the functions
   module.exports = formatTimestamp
