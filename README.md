@@ -31,7 +31,7 @@ Follow these to install and set up the app on your local machine.
 5. Run the app using commant `npm start`
 
 ## Demo Recording
-* 
+* https://drive.google.com/file/d/1vJYTo5u0tm9x-vLAI2oZhhDKnrEMwreE/view 
 ## Screenshots
  * NA
 ## Technologies-Used
